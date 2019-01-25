@@ -123,6 +123,8 @@ export default class ConnectionPool extends EventEmitter {
     Object.keys(this.nodes.all).forEach((key) => {
       if (!newNodes[key]) {
         debug('Disconnect %s because the node does not hold any slot', key)
+        debug('katie new nodes=', JSON.stringify(newNodes));
+        debug('katie original nodes=', JSON.stringify(this.nodes));
         this.nodes.all[key].disconnect()
       }
     })

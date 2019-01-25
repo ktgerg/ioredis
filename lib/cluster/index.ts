@@ -238,6 +238,7 @@ class Cluster extends EventEmitter {
     this.setStatus('disconnecting')
 
     if (!reconnect) {
+      debug('From katie in disconnect setting manuallyClosing to true')
       this.manuallyClosing = true
     }
     if (this.reconnectTimeout) {
@@ -269,7 +270,7 @@ class Cluster extends EventEmitter {
   public quit(callback?: CallbackFunction<'OK'>): Promise<'OK'> {
     const status = this.status
     this.setStatus('disconnecting')
-
+    debug('From katie in quit status is disconnecting setting manuallyClosing to true')
     this.manuallyClosing = true
 
     if (this.reconnectTimeout) {
@@ -579,6 +580,7 @@ class Cluster extends EventEmitter {
     }
     const errv = error.message.split(' ')
     if (errv[0] === 'MOVED' || errv[0] === 'ASK') {
+      debug('katie Moved');
       handlers[errv[0] === 'MOVED' ? 'moved' : 'ask'](errv[1], errv[2])
     } else if (errv[0] === 'TRYAGAIN') {
       this.delayQueue.push('tryagain', handlers.tryagain, {
